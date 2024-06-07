@@ -21,6 +21,7 @@ return new class extends Migration
             $table->String('lokasi');
             $table->text('keterangan');
             $table->integer('like');
+            $table->enum('status', ['pending', 'verified', 'rejected'])->default('pending');
             $table->timestamps();
         });
     }
