@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AduanController;
 use App\Http\Controllers\AuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -33,5 +34,10 @@ Route::group([
     Route::post('refresh', [AuthController::class, 'refresh']);
     Route::post('me', [AuthController::class, 'me']);
 
+    Route::post('aduans', [AduanController::class, 'store']);
+    Route::get('aduans', [AduanController::class, 'index']);
+    Route::delete('aduans/{userId}', [AduanController::class, 'destroy']);
+    Route::put('aduans/{aduanId}', [AduanController::class, 'update']);
 });
 
+// Route::apiResource('aduans', AduanController::class);

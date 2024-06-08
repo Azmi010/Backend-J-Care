@@ -19,16 +19,16 @@ class AuthController extends Controller
     public function __construct()
     {
         $this->middleware('auth:api', ['except' => ['login', 'register']]);
-        $this->mi
     }
 
     public function register()
     {
         $validator = Validator::make(request()->all(), [
             'username' => 'required',
-            'email' => 'required|email|unique:users',
+            'email' => 'required|email:dns|unique:users',
             'password' => 'required',
-            'role_id' => 'required'
+            'role_id' => 'required',
+            'image' => 'required',
         ]);
 
         if($validator->fails())
@@ -40,7 +40,8 @@ class AuthController extends Controller
             'username' => request('username'),
             'email' => request('email'),
             'password' => Hash::make(request('password')),
-            'role_id' => request('role_id')
+            'role_id' => request('role_id'),
+            'image' => request('image'),
         ]);
 
         if($user){
@@ -113,4 +114,6 @@ class AuthController extends Controller
             'expires_in' => auth()->factory()->getTTL() * 60
         ]);
     }
+
+    
 }
