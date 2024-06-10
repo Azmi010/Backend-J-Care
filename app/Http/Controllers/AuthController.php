@@ -55,36 +55,36 @@ class AuthController extends Controller
         }
     }
 
-    public function update(Request $request)
-{
-    $validator = Validator::make($request->all(), [
-        'username' => 'nullable|string',
-        'phone_number' => 'nullable|string',
-        'address' => 'nullable|string'
-    ]);
+    public function updateAkun(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'username' => 'nullable|string',
+            'phone_number' => 'nullable|string',
+            'address' => 'nullable|string'
+        ]);
 
-    if ($validator->fails()) {
-        return response()->json($validator->errors(), 422);
-    }
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 422);
+        }
 
-    $user = Auth::user();
+        $user = Auth::user();
 
-    if ($request->has('username')) {
-        $user->username = $request->input('username');
-    }
-    if ($request->has('phone_number')) {
-        $user->phone_number = $request->input('phone_number');
-    }
-    if ($request->has('address')) {
-        $user->address = $request->input('address');
-    }
+        if ($request->has('username')) {
+            $user->username = $request->input('username');
+        }
+        if ($request->has('phone_number')) {
+            $user->phone_number = $request->input('phone_number');
+        }
+        if ($request->has('address')) {
+            $user->address = $request->input('address');
+        }
 
-    if ($user->save()) {
-        return response()->json(['message' => 'Profil berhasil diperbarui', 'user' => $user]);
-    } else {
-        return response()->json(['message' => 'Gagal memperbarui profil'], 500);
+        if ($user->save()) {
+            return response()->json(['message' => 'Profil berhasil diperbarui', 'user' => $user]);
+        } else {
+            return response()->json(['message' => 'Gagal memperbarui profil'], 500);
+        }
     }
-}
 
 
 
