@@ -20,11 +20,11 @@ class UserFactory extends Factory
     public function definition()
     {
         return [
-            'role_id' => Role::factory(), // Menggunakan factory role
+            'role_id' => Role::factory(),
             'username' => $this->faker->userName,
             'email' => $this->faker->unique()->safeEmail,
-            'password' => Hash::make('password'), // Untuk contoh, kita hash dengan 'password'
-            'image' => $this->faker->imageUrl(640, 480, 'people'), // Gambar acak
+            'password' => Hash::make('password'),
+            'image' => $this->faker->imageUrl(640, 480, 'people'),
             'remember_token' => Str::random(10),
             'created_at' => now(),
             'updated_at' => now(),

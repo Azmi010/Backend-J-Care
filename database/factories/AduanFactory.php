@@ -20,13 +20,14 @@ class AduanFactory extends Factory
     public function definition()
     {
         return [
-            'user_id' => \App\Models\User::factory(), // Menggunakan factory user
-            'status_id' => \App\Models\Status::factory(), // Menggunakan factory status
+            'user_id' => \App\Models\User::factory(),
+            'status_id' => \App\Models\Status::factory(),
             'judul' => $this->faker->sentence,
             'lokasi' => $this->faker->address,
             'keterangan' => $this->faker->paragraph,
             'like' => $this->faker->numberBetween(0, 100),
             'status' => $this->faker->randomElement(['pending', 'verified', 'rejected']),
+            'gambar' => $this->faker->imageUrl(),
             'created_at' => now(),
             'updated_at' => now(),
         ];
