@@ -19,6 +19,8 @@ return new class extends Migration
             $table->String('username');
             $table->String('email')->unique();
             $table->String('password');
+            $table->String('phone_number')->nullable();
+            $table->String('address')->nullable();
             $table->String('image')->nullable();
             $table->rememberToken();
             $table->timestamps();

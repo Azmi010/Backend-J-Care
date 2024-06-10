@@ -33,6 +33,7 @@ Route::group([
     Route::post('logout', [AuthController::class, 'logout']);
     Route::post('refresh', [AuthController::class, 'refresh']);
     Route::post('me', [AuthController::class, 'me']);
+    Route::put('update', [AuthController::class, 'update']);
 
     Route::post('aduans', [AduanController::class, 'store']);
     Route::get('aduans', [AduanController::class, 'index']);

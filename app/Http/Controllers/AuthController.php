@@ -29,10 +29,12 @@ class AuthController extends Controller
             'password' => 'required',
             'role_id' => 'required',
             'image' => 'required',
+            'phone_number' => 'nullable|string',
+            'address' => 'nullable|string'
         ]);
 
-        if($validator->fails())
-        {
+
+        if ($validator->fails()) {
             return response()->json($validator->errors());
         }
 
@@ -42,14 +44,49 @@ class AuthController extends Controller
             'password' => Hash::make(request('password')),
             'role_id' => request('role_id'),
             'image' => request('image'),
+            'phone_number' => request('phone_number'),
+            'address' => request('address')
         ]);
 
-        if($user){
+        if ($user) {
             return response()->json(['message' => 'Pendaftaran Berhasil']);
         } else {
             return response()->json(['message' => 'Pendaftaran Gagal']);
         }
     }
+
+    public function update(Request $request)
+{
+    $validator = Validator::make($request->all(), [
+        'username' => 'nullable|string',
+        'phone_number' => 'nullable|string',
+        'address' => 'nullable|string'
+    ]);
+
+    if ($validator->fails()) {
+        return response()->json($validator->errors(), 422);
+    }
+
+    $user = Auth::user();
+
+    if ($request->has('username')) {
+        $user->username = $request->input('username');
+    }
+    if ($request->has('phone_number')) {
+        $user->phone_number = $request->input('phone_number');
+    }
+    if ($request->has('address')) {
+        $user->address = $request->input('address');
+    }
+
+    if ($user->save()) {
+        return response()->json(['message' => 'Profil berhasil diperbarui', 'user' => $user]);
+    } else {
+        return response()->json(['message' => 'Gagal memperbarui profil'], 500);
+    }
+}
+
+
 
     /**
      * Get a JWT via given credentials.
@@ -60,7 +97,7 @@ class AuthController extends Controller
     {
         $credentials = request(['email', 'password']);
 
-        if (! $token = auth()->attempt($credentials)) {
+        if (!$token = auth()->attempt($credentials)) {
             return response()->json(['error' => 'Unauthorized'], 401);
         }
 
@@ -114,6 +151,4 @@ class AuthController extends Controller
             'user' => auth()->user()
         ]);
     }
-
-    
 }
