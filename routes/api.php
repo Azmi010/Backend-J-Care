@@ -39,6 +39,7 @@ Route::group([
     Route::get('aduans', [AduanController::class, 'index']);
     Route::delete('aduans/{userId}', [AduanController::class, 'destroy']);
     Route::put('aduans/{aduanId}', [AduanController::class, 'updateLike']);
+    Route::put('aduans/{aduanId}/status', [AduanController::class, 'updateStatus']);
 });
 
 // Route::apiResource('aduans', AduanController::class);

@@ -70,39 +70,51 @@ class AduanController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function updateLike(Request $request, $aduanId)
-{
-    $aduan = Aduan::findOrFail($aduanId);
+    {
+        $aduan = Aduan::findOrFail($aduanId);
 
-    $validatedData = $request->validate([
-        'like' => 'required|integer',
-        'status_like' => 'required|boolean'
-    ]);
+        $validatedData = $request->validate([
+            'like' => 'required|integer',
+            'status_like' => 'required|boolean'
+        ]);
 
-    // Asumsikan Anda memiliki user_id dari autentikasi
-    $userId = auth()->id();
+        // Asumsikan Anda memiliki user_id dari autentikasi
+        $userId = auth()->id();
 
-    // Temukan atau buat entri like
-    $like = Like::firstOrNew(
-        ['user_id' => $userId, 'aduan_id' => $aduanId]
-    );
+        // Temukan atau buat entri like
+        $like = Like::firstOrNew(
+            ['user_id' => $userId, 'aduan_id' => $aduanId]
+        );
 
-    // Update status_like dari request
-    $like->status_like = $validatedData['status_like'];
-    $like->save();
+        // Update status_like dari request
+        $like->status_like = $validatedData['status_like'];
+        $like->save();
 
-    // Update jumlah like pada tabel Aduan
-    $aduan->update([
-        'like' => $validatedData['like']
-    ]);
+        // Update jumlah like pada tabel Aduan
+        $aduan->update([
+            'like' => $validatedData['like']
+        ]);
 
-    return response()->json([
-        'aduan' => $aduan,
-        'like' => $like
-    ]);
-}
+        return response()->json([
+            'aduan' => $aduan,
+            'like' => $like
+        ]);
+    }
 
+    public function updateStatus(Request $request, $aduanId)
+    {
+        $aduan = Aduan::findOrFail($aduanId);
 
+        $validatedData = $request->validate([
+            'status' => 'required|in:pending,verified,rejected',
+        ]);
 
+        $aduan->update([
+            'status' => $validatedData['status'],
+        ]);
+
+        return response()->json($aduan);
+    }
 
     /**
      * Remove the specified resource from storage.
