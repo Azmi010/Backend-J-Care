@@ -20,12 +20,12 @@ class UserFactory extends Factory
     public function definition()
     {
         return [
-            'role_id' => Role::factory(),
             'username' => $this->faker->userName,
             'email' => $this->faker->unique()->safeEmail,
             'password' => Hash::make('password'),
             'image' => $this->faker->imageUrl(640, 480, 'people'),
             'remember_token' => Str::random(10),
+            'role' => 'user',
             'created_at' => now(),
             'updated_at' => now(),
         ];

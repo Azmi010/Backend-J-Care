@@ -27,10 +27,10 @@ class AuthController extends Controller
             'username' => 'required',
             'email' => 'required|email:dns|unique:users',
             'password' => 'required',
-            'role_id' => 'required',
             'image' => 'required',
             'phone_number' => 'nullable|string',
-            'address' => 'nullable|string'
+            'address' => 'nullable|string',
+            'role' => 'required'
         ]);
 
 
@@ -42,10 +42,10 @@ class AuthController extends Controller
             'username' => request('username'),
             'email' => request('email'),
             'password' => Hash::make(request('password')),
-            'role_id' => request('role_id'),
             'image' => request('image'),
             'phone_number' => request('phone_number'),
-            'address' => request('address')
+            'address' => request('address'),
+            'role' => 'user'
         ]);
 
         if ($user) {
