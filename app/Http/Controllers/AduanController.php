@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Aduan;
+use App\Models\Like;
 
 class AduanController extends Controller
 {
@@ -68,20 +69,39 @@ class AduanController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $aduanId)
-    {
-        $aduan = Aduan::findOrFail($aduanId);
+    public function updateLike(Request $request, $aduanId)
+{
+    $aduan = Aduan::findOrFail($aduanId);
 
-        $validatedData = $request->validate([
-            'like' => 'required|integer'
-        ]);
+    $validatedData = $request->validate([
+        'like' => 'required|integer',
+        'status_like' => 'required|boolean'
+    ]);
 
-        $aduan->update([
-            'like' => $validatedData['like']
-        ]);
+    // Asumsikan Anda memiliki user_id dari autentikasi
+    $userId = auth()->id();
 
-        return $aduan;
-    }
+    // Temukan atau buat entri like
+    $like = Like::firstOrNew(
+        ['user_id' => $userId, 'aduan_id' => $aduanId]
+    );
+
+    // Update status_like dari request
+    $like->status_like = $validatedData['status_like'];
+    $like->save();
+
+    // Update jumlah like pada tabel Aduan
+    $aduan->update([
+        'like' => $validatedData['like']
+    ]);
+
+    return response()->json([
+        'aduan' => $aduan,
+        'like' => $like
+    ]);
+}
+
+
 
 
     /**

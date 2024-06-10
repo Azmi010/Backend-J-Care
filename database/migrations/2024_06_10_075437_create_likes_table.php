@@ -13,16 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('aduans', function (Blueprint $table) {
+        Schema::create('likes', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id');
-            $table->foreignId('status_id');
-            $table->String('judul');
-            $table->String('lokasi');
-            $table->text('keterangan');
-            $table->integer('like');
-            $table->enum('status', ['pending', 'verified', 'rejected'])->default('pending');    
-            $table->string('gambar');
+            $table->foreignId('aduan_id');
+            $table->boolean('status_like')->default(0);
             $table->timestamps();
         });
     }
@@ -34,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('aduans');
+        Schema::dropIfExists('likes');
     }
 };
