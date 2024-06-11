@@ -30,22 +30,27 @@ class AduanController extends Controller
     {
         $validatedData = $request->validate([
             'user_id' => 'required',
-            'status_id' => 'required',
             'judul' => 'required|string|max:255',
             'lokasi' => 'required|string|max:255',
             'keterangan' => 'required|string',
-            'like' => 'required|integer',
-            'status' => 'in:pending,verified,rejected'
+            'status' => 'in:pending,verified,rejected',
+            'gambar' => 'required|image',
         ]);
+
+        if ($request->hasFile('gambar')) {
+            $file = $request->file('gambar');
+            $filePath = $file->store('uploads', 'public');
+            $validatedData['gambar'] = $filePath;
+        }
 
         $aduan = Aduan::create([
             'user_id' => $validatedData['user_id'],
-            'status_id' => $validatedData['status_id'],
             'judul' => $validatedData['judul'],
             'lokasi' => $validatedData['lokasi'],
             'keterangan' => $validatedData['keterangan'],
-            'like' => $validatedData['like'],
-            'status' => $validatedData['status'] ?? 'pending'
+            'like' => 0,
+            'status' => $validatedData['status'] ?? 'pending',
+            'gambar' => $validatedData['gambar'],
         ]);
 
         return response()->json($aduan, 201);

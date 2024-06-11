@@ -16,11 +16,10 @@ return new class extends Migration
         Schema::create('aduans', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id');
-            $table->foreignId('status_id');
             $table->String('judul');
             $table->String('lokasi');
             $table->text('keterangan');
-            $table->integer('like');
+            $table->integer('like')->default(0);
             $table->enum('status', ['pending', 'verified', 'rejected'])->default('pending');    
             $table->string('gambar');
             $table->timestamps();

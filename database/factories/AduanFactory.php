@@ -21,7 +21,6 @@ class AduanFactory extends Factory
     {
         return [
             'user_id' => \App\Models\User::factory(),
-            'status_id' => \App\Models\Status::factory(),
             'judul' => $this->faker->sentence,
             'lokasi' => $this->faker->address,
             'keterangan' => $this->faker->paragraph,

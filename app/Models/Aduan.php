@@ -16,7 +16,8 @@ class Aduan extends Model
         'lokasi',
         'keterangan',
         'like',
-        'status'
+        'status',
+        'gambar',
     ];
 
     public function user()
