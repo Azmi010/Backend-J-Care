@@ -1,13 +1,14 @@
 <?php
 
-use App\Http\Controllers\AduanController;
-use App\Http\Controllers\AuthController;
+use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\AduanController;
 use Illuminate\Support\Facades\Validator;
-use App\Models\User;
+use App\Http\Controllers\ImageUploadController;
 
 /*
 |--------------------------------------------------------------------------
@@ -40,6 +41,7 @@ Route::group([
     Route::delete('aduans/{userId}', [AduanController::class, 'destroy']);
     Route::put('aduans/{aduanId}', [AduanController::class, 'updateLike']);
     Route::put('aduans/{aduanId}/status', [AduanController::class, 'updateStatus']);
+    Route::post('/auth/upload', [ImageUploadController::class, 'upload']);
 });
 
 // Route::apiResource('aduans', AduanController::class);
