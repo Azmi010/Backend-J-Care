@@ -33,12 +33,12 @@ Route::group([
     Route::post('login', [AuthController::class, 'login']);
     Route::post('logout', [AuthController::class, 'logout']);
     Route::post('refresh', [AuthController::class, 'refresh']);
-    // Route::post('me', [AuthController::class, 'me']);
+    Route::post('me', [AuthController::class, 'me']);
     Route::put('update', [AuthController::class, 'updateAkun']);
 
     Route::post('aduans', [AduanController::class, 'store']);
     Route::get('aduans', [AduanController::class, 'index']);
-    // Route::delete('aduans/{userId}', [AduanController::class, 'destroy']);
+    Route::delete('aduans/{userId}', [AduanController::class, 'destroy']);
     Route::put('aduans/{aduanId}', [AduanController::class, 'updateLike']);
     Route::put('aduans/{aduanId}/status', [AduanController::class, 'updateStatus']);
     // Route::post('/auth/upload', [ImageUploadController::class, 'upload']);
