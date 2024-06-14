@@ -40,7 +40,7 @@ class AduanController extends Controller
         if ($request->hasFile('gambar')) {
             $file = $request->file('gambar');
             $filePath = $file->store('uploads', 'public');
-            $validatedData['gambar'] = $filePath;
+            $validatedData['gambar'] = 'https://backend-j-care-production.up.railway.app/storage/' . $filePath;
         }
 
         $aduan = Aduan::create([
@@ -55,6 +55,7 @@ class AduanController extends Controller
 
         return response()->json($aduan, 201);
     }
+
 
     /**
      * Display the specified resource.
